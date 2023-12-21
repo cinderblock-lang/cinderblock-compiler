@@ -1,0 +1,29 @@
+namespace Compiler.Tokeniser {
+  using Metadata;
+  using std.string.utf_8;
+
+  export struct Token {
+    location: CodeLocation;
+    text: string;
+  }
+
+  export struct TokenResult {
+    done: bool;
+    result?: Token;
+    next?: int;
+  }
+
+  fn is_symbol_character(character: int): bool {
+    return character == '=' &&;
+  }
+
+  fn extract_symbol(index: int, code: string, file_name: string): TokenResult {
+    char -> code.get_character(index);
+  }
+
+  export fn SplitTokens(code: string, file_name: string): (index: int) -> TokenResult {
+    return fn (index: int) -> {
+      char -> code.get_character(index);
+    };
+  }
+}

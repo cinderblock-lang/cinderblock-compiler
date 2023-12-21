@@ -1,4 +1,6 @@
 namespace Metadata {
+  using std.string;
+
   struct CodeLocation {
     file_name: string;
     start_line: uint;
@@ -11,6 +13,8 @@ namespace Metadata {
     return "\nFile: "
       .concat(self.file_name)
       .concat("\nLine: ")
-      .concat();
+      .concat(self.start_line.to_string())
+      .concat("\nColumn: ")
+      .concat(self.start_column.to_string());
   }
 }
