@@ -1,3 +1,30 @@
+namespace Compiler.Tokeniser.StringTraversal {
+  using std.string.utf_8;
+   
+  export struct Character {
+    character: int;
+    line: uint;
+    column: uint;
+  }
+
+  export struct CharacterResult {
+    done: bool;
+    result?: Character;
+    next?: int;
+  }
+
+  export fn TraverseString(target: string) {
+    return iterate (target.to_iterable() as character) {
+      return if (character == '\n') {
+        return make Character {
+          assign character = character;
+          assign line = 
+        };
+      }
+    };
+  }
+}
+
 namespace Compiler.Tokeniser {
   using Metadata;
   using std.string.utf_8;
@@ -14,7 +41,41 @@ namespace Compiler.Tokeniser {
   }
 
   fn is_symbol_character(character: int): bool {
-    return character == '=' &&;
+    return character == '=' ||
+           character == '-' ||
+           character == '/' ||
+           character == '\\' ||
+           character == '+' ||
+           character == '?' ||
+           character == '*' ||
+           character == '<' ||
+           character == '>' ||
+           character == '&' ||
+           character == '%' ||
+           character == '|' ||
+           character == '!' ||
+           character == '^' ||
+           character == '~';
+  }
+
+  fn is_word_character(character: int): bool {
+    return (character >= 48i && character <= 57i) ||
+           (character >= 65i && character <= 90i) ||
+           (character >= 97i && character <= 122i) ||
+           character == 95i;
+  }
+
+  fn is_quote_character(character: int): bool {
+    return character == '"' || character == '\'' || character == '`';
+  }
+
+  fn extract_word(
+    self: string,
+    char: StringIterableContext,
+    code: string,
+    file_name: string
+  ): TokenResult {
+    
   }
 
   fn extract_symbol(index: int, code: string, file_name: string): TokenResult {
