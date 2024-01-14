@@ -213,20 +213,28 @@ namespace Compiler.Tokeniser {
 
   export fn SplitTokens(code: string, file_name: string): (next?: CharacterNext) -> TokenResult {
     iterator -> TraverseString(code);
+    word -> extract_word(file_name);
+    maths -> extract_maths(file_name);
+    string -> extract_string(file_name);
 
     return fn (next?: CharacterNext) -> {
-      char -> iterator(next).result.character;
+      char_result = iterator(next)
+      char -> char_result.result.character;
 
-      return if (char.is_word_character()) {
-        return iterator.extract_word(next, file_name);
+      return if (char_result.done) {
+        return make TokenResult {
+          assign done = true;
+        };
+      } else if (char.is_word_character()) {
+        return iterator.word(next);
       } else if (char.is_maths_character()) {
-        return iterator.extract_maths(next, file_name);
+        return iterator.maths(next);
       } else if (char.is_string_character()) {
-        return iterator.extract_string(next, file_name);
+        return iterator.string(next);
       } else {
         return make TokenResult {
           assign done = false;
-          assign next = iterator(next).next;
+          assign next = char_result.next;
           assign result = pick Token.Error {
             return make Error {
               assign message = "Unexpected character ".add_character(char);
