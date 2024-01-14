@@ -1,7 +1,7 @@
 namespace Metadata {
   using std.string;
 
-  struct CodeLocation {
+  export struct CodeLocation {
     file_name: string;
     start_line: uint;
     start_column: uint;
